@@ -5,6 +5,7 @@
  */
 package consoleapps;
 
+import java.util.Scanner;
 import java.util.Stack;
 
 /**
@@ -20,54 +21,39 @@ public class StackPostFix {
         Boolean isBalanced = true;
         char nextCharacter = ' ';
         char openDelimiter = ' ';
-        char  left;
+        char left;
         char right;
         char output;
         // Returns true if the parentheses, brackets, and braces in an
         // expression are paired correctly.
-        for (int i = 0; i < expression.length(); i++) {
-            //nextCharacter = next character in expression
-            nextCharacter = expression.charAt(i);
+        Scanner sc = new Scanner(expression);
+        Stack<Integer> stack = new Stack<Integer>();
 
-            switch (nextCharacter) {
-                case '+':
-                case '-':
-                case '*':
-                case '/':{
-                    charStack.push(nextCharacter);                    
-                    break;
-                }
-                case ')':
-                case ']':
-                case '}':
-                    if (myStack.isEmpty()) {
-                        isBalanced = false;
-                        break;
-                    } else {
-                        //openDelimiter = top entry of stack
-                        //Pop stack
-                        //openDelimiter = myStack.peek();
-                        //isBalanced = true or false according to whether
-                        //openDelimiter and nextCharacter are
-                        //a pair of delimiters
-                        if ((openDelimiter == '(' && nextCharacter == ')')
-                                || (openDelimiter == '{' && nextCharacter == '}')
-                                || (openDelimiter == '[' && nextCharacter == ']')) {
-                            isBalanced = true;
-                            myStack.pop();
-                            break;
-                        } else {
-                            isBalanced = false;
-                            break;
-                        }
-                    }
-                default:
-                    isBalanced = false;
-                    break;
-
-            }//end of switch loop
-            return true;
+        while (sc.hasNext()) {
+            if (sc.hasNextInt()) {
+                stack.push(sc.nextInt());
+                continue;
+            }
+            int b = stack.pop();
+            int a = stack.pop();
+            char op = sc.next().charAt(0);
+            if (op == '+') {
+                stack.push(a + b);
+            } else if (op == '-') {
+                stack.push(a - b);
+            } else if (op == '*') {
+                stack.push(a * b);
+            } else if (op == '/') {
+                stack.push(a / b);
+            } else if (op == '%') {
+                stack.push(a % b);
+            }
         }
+
+        sc.close();
+        //return stack.pop();
+
+        return true;
     }
 
     public static void main(String[] args) {
