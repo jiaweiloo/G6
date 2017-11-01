@@ -46,7 +46,7 @@ public class StackPostFix {
                     } else {
                         //openDelimiter = top entry of stack
                         //Pop stack
-                        openDelimiter = myStack.peek();
+                        //openDelimiter = myStack.peek();
                         //isBalanced = true or false according to whether
                         //openDelimiter and nextCharacter are
                         //a pair of delimiters
